@@ -4,8 +4,19 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { ArrowUpRight, Github, Mail } from "lucide-react";
+import { fetchGitHubStats } from "@/lib/github";
 
-export default function HomePage() {
+function formatDate(dateString: string): string {
+  const date = new Date(dateString);
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  }).format(date);
+}
+
+export default async function HomePage() {
+  const githubStats = await fetchGitHubStats("jadamkraft");
   return (
     <main className="mx-auto min-h-dvh w-full max-w-6xl px-4 py-8 md:px-8 md:py-12">
       <div className="mb-6 flex items-end justify-between gap-4">
@@ -26,7 +37,7 @@ export default function HomePage() {
           </Button>
           <Button asChild>
             <a
-              href="https://github.com/"
+              href="https://github.com/jadamkraft"
               target="_blank"
               rel="noreferrer noopener"
             >
@@ -117,21 +128,51 @@ export default function HomePage() {
         <BentoItem
           className="md:col-span-3"
           eyebrow="Stats"
-          title="GitHub activity"
+          title={
+            <div className="flex items-center gap-2">
+              <span>GitHub activity</span>
+              {githubStats.status === "online" && (
+                <span
+                  className="inline-block size-2 rounded-full bg-green-500"
+                  aria-label="Systems Online"
+                />
+              )}
+            </div>
+          }
         >
           <div className="font-mono text-xs leading-relaxed text-muted-foreground">
             <div className="space-y-1">
               <div>$ github contributions --year 2025</div>
-              <div className="text-foreground">… fetching (placeholder)</div>
-              <div className="opacity-70">
-                green squares will live here soon.
-              </div>
+              {githubStats.status === "online" ? (
+                <>
+                  <div className="text-foreground">
+                    Public repos:{" "}
+                    <span className="font-mono">{githubStats.totalRepos}</span>
+                  </div>
+                  {githubStats.latestCommit ? (
+                    <div className="text-foreground">
+                      Latest commit:{" "}
+                      <span className="font-mono">
+                        {githubStats.latestCommit.message}
+                      </span>
+                      <br />
+                      <span className="opacity-70">
+                        {formatDate(githubStats.latestCommit.date)}
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="opacity-70">No recent commits</div>
+                  )}
+                </>
+              ) : (
+                <div className="text-foreground">Status: Disconnected</div>
+              )}
             </div>
           </div>
           <div className="mt-4">
             <Button asChild variant="outline" className="w-full">
               <a
-                href="https://github.com/"
+                href="https://github.com/jadamkraft"
                 target="_blank"
                 rel="noreferrer noopener"
               >
@@ -164,7 +205,7 @@ export default function HomePage() {
               </Button>
               <Button asChild variant="secondary" className="w-full md:w-auto">
                 <a
-                  href="https://github.com/"
+                  href="https://github.com/jadamkraft"
                   target="_blank"
                   rel="noreferrer noopener"
                 >
