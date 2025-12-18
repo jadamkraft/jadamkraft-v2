@@ -1,5 +1,6 @@
 import { BentoGrid } from "@/components/bento-grid";
 import { BentoItem } from "@/components/bento-item";
+import { AnimatedTomlinsonCard } from "@/components/animated-tomlinson-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -50,7 +51,7 @@ export default async function HomePage() {
 
       <BentoGrid>
         {/* Hero */}
-        <BentoItem className="md:col-span-4 md:row-span-2">
+        <BentoItem colSpan={2} rowSpan={2}>
           <div className="flex h-full flex-col justify-between gap-6">
             <div className="flex items-start justify-between gap-6">
               <div className="space-y-3">
@@ -86,47 +87,37 @@ export default async function HomePage() {
         </BentoItem>
 
         {/* Flagship */}
-        <BentoItem
-          className="md:col-span-2 md:row-span-2"
-          eyebrow="Flagship"
-          title="Tomlinson 10"
-          href="https://tomlinson.jadamkraft.com"
-          icon={<ArrowUpRight className="size-4" />}
-        >
-          <p className="text-sm leading-relaxed text-muted-foreground">
-            A focused build exploring product storytelling, system design, and
-            polished UI in public.
-          </p>
-          <div className="mt-4 inline-flex items-center gap-2 text-sm font-medium">
-            Open project <ArrowUpRight className="size-4" />
-          </div>
-        </BentoItem>
+        <AnimatedTomlinsonCard />
 
         {/* Creative (Poet) */}
         <BentoItem
-          className="md:col-span-3"
+          colSpan={1}
+          rowSpan={2}
           eyebrow="Creative"
-          title="Clark Kent"
+          title="Just a half touch"
         >
-          <div className="font-serif">
-            <p className="text-sm leading-relaxed text-muted-foreground">
-              I keep two lives in one jacket:
-              <br />
-              one pocket for the build logs,
-              <br />
-              the other for the bruise of a line
-              <br />
-              that finally tells the truth.
+          <div
+            className="relative flex h-full flex-col justify-start rounded-lg bg-cover bg-center bg-no-repeat p-8 font-serif italic leading-loose text-foreground"
+            style={{
+              backgroundImage: "url('/assets/paper-texture.png')",
+            }}
+          >
+            <p className="text-sm">
+              Just a half touch, Incidental. Maybe in times small things stayed
+              small. When did the world change?
             </p>
-            <p className="mt-4 text-xs text-muted-foreground">
-              (Poem module placeholder — serif typography on purpose.)
+            <p className="mt-4 text-sm">
+              It only ever made my soul scream louder. I can't find any place to
+              rest my body now
             </p>
+            <p className="mt-4 text-sm">Except in Ex- istential dreams.</p>
           </div>
         </BentoItem>
 
         {/* Stats (Engineer) */}
         <BentoItem
-          className="md:col-span-3"
+          colSpan={1}
+          rowSpan={1}
           eyebrow="Stats"
           title={
             <div className="flex items-center gap-2">
@@ -185,7 +176,8 @@ export default async function HomePage() {
 
         {/* Contact */}
         <BentoItem
-          className="md:col-span-6"
+          colSpan={2}
+          rowSpan={1}
           eyebrow="Contact"
           title="Let’s build"
         >

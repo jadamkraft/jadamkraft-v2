@@ -1,4 +1,7 @@
+"use client";
+
 import * as React from "react";
+import { motion } from "framer-motion";
 
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
@@ -6,15 +9,35 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export type BentoItemProps = {
   className?: string;
-  title?: string;
+  title?: string | React.ReactNode;
   eyebrow?: string;
   icon?: React.ReactNode;
   href?: string;
   children?: React.ReactNode;
+  colSpan?: number;
+  rowSpan?: number;
 };
 
 function isExternalHref(href: string) {
   return href.startsWith("http://") || href.startsWith("https://");
+}
+
+// Helper to get grid span classes (Tailwind JIT requires explicit class names)
+function getGridSpanClasses(colSpan?: number, rowSpan?: number): string {
+  const colClasses: Record<number, string> = {
+    1: "md:col-span-1",
+    2: "md:col-span-2",
+    3: "md:col-span-3",
+    4: "md:col-span-4",
+  };
+  const rowClasses: Record<number, string> = {
+    1: "md:row-span-1",
+    2: "md:row-span-2",
+    3: "md:row-span-3",
+    4: "md:row-span-4",
+  };
+
+  return cn(colSpan && colClasses[colSpan], rowSpan && rowClasses[rowSpan]);
 }
 
 export function BentoItem({
@@ -24,8 +47,13 @@ export function BentoItem({
   icon,
   href,
   children,
+  colSpan,
+  rowSpan,
 }: BentoItemProps) {
   const external = href ? isExternalHref(href) : false;
+
+  // Generate grid classes from props
+  const gridClasses = getGridSpanClasses(colSpan, rowSpan);
 
   const card = (
     <Card
@@ -33,6 +61,7 @@ export function BentoItem({
         "group relative h-full overflow-hidden border-border/60 bg-card/60 shadow-sm transition-all",
         "hover:-translate-y-0.5 hover:shadow-lg",
         "focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 focus-within:ring-offset-background",
+        gridClasses,
         className
       )}
     >
@@ -77,16 +106,24 @@ export function BentoItem({
     </Card>
   );
 
-  if (!href) return card;
+  const motionCard = (
+    <motion.div layout className="h-full">
+      {card}
+    </motion.div>
+  );
+
+  if (!href) return motionCard;
 
   return (
-    <a
-      href={href}
-      target={external ? "_blank" : undefined}
-      rel={external ? "noreferrer noopener" : undefined}
-      className="block h-full rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-    >
-      {card}
-    </a>
+    <motion.div layout className="h-full">
+      <a
+        href={href}
+        target={external ? "_blank" : undefined}
+        rel={external ? "noreferrer noopener" : undefined}
+        className="block h-full rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+      >
+        {card}
+      </a>
+    </motion.div>
   );
 }
