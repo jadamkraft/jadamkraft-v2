@@ -16,13 +16,13 @@ export function TomlinsonCard({ className }: { className?: string }) {
       rel="noreferrer noopener"
       aria-label="Tomlinson 10 - Open flagship project"
       className={cn(
-        "group block h-full rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+        "group block h-full w-full rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
         className
       )}
     >
       <Card
         className={cn(
-          "relative h-full overflow-hidden border-border/60 bg-card/60 shadow-sm transition-all",
+          "relative h-full w-full overflow-hidden border-border/60 bg-card/60 shadow-sm transition-all",
           "hover:-translate-y-0.5 hover:shadow-lg",
           "focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 focus-within:ring-offset-background"
         )}

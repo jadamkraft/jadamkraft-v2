@@ -1,12 +1,18 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { BentoItem, BentoShape } from "./bento-item";
 import { TomlinsonCard } from "./tomlinson-card";
 
-export function AnimatedTomlinsonCard() {
+interface AnimatedTomlinsonCardProps {
+  shape?: BentoShape;
+}
+
+export function AnimatedTomlinsonCard({
+  shape = "TOWER",
+}: AnimatedTomlinsonCardProps) {
   return (
-    <motion.div layout className="md:col-span-2 md:row-span-2 h-full">
-      <TomlinsonCard className="h-full" />
-    </motion.div>
+    <BentoItem shape={shape} noCard>
+      <TomlinsonCard className="h-full w-full" />
+    </BentoItem>
   );
 }

@@ -7,6 +7,12 @@ import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
+/**
+ * Shape tokens for the Bento Grid system.
+ * These define the four valid container shapes for grid items.
+ */
+export type BentoShape = "UNIT" | "TOWER" | "BANNER" | "SQUARE_XL";
+
 export type BentoItemProps = {
   className?: string;
   title?: string | React.ReactNode;
@@ -14,30 +20,32 @@ export type BentoItemProps = {
   icon?: React.ReactNode;
   href?: string;
   children?: React.ReactNode;
-  colSpan?: number;
-  rowSpan?: number;
+  shape: BentoShape;
+  /**
+   * When true, renders as a simple grid wrapper without Card styling.
+   * Useful for components that provide their own Card wrapper.
+   */
+  noCard?: boolean;
 };
 
 function isExternalHref(href: string) {
   return href.startsWith("http://") || href.startsWith("https://");
 }
 
-// Helper to get grid span classes (Tailwind JIT requires explicit class names)
-function getGridSpanClasses(colSpan?: number, rowSpan?: number): string {
-  const colClasses: Record<number, string> = {
-    1: "md:col-span-1",
-    2: "md:col-span-2",
-    3: "md:col-span-3",
-    4: "md:col-span-4",
-  };
-  const rowClasses: Record<number, string> = {
-    1: "md:row-span-1",
-    2: "md:row-span-2",
-    3: "md:row-span-3",
-    4: "md:row-span-4",
+/**
+ * Maps shape tokens to their corresponding Tailwind grid classes.
+ * Uses pure grid spans for reliable column/row sizing.
+ * Tailwind JIT requires explicit class names.
+ */
+export function getShapeClasses(shape: BentoShape): string {
+  const shapeMap: Record<BentoShape, string> = {
+    UNIT: "md:col-span-1 md:row-span-1", // 1x1 - Utility & Filler
+    TOWER: "md:col-span-1 md:row-span-2", // 1x2 - Vertical flow
+    BANNER: "md:col-span-2 md:row-span-1", // 2x1 - Cinematic
+    SQUARE_XL: "md:col-span-2 md:row-span-2", // 2x2 - Heavyweight
   };
 
-  return cn(colSpan && colClasses[colSpan], rowSpan && rowClasses[rowSpan]);
+  return shapeMap[shape];
 }
 
 export function BentoItem({
@@ -47,21 +55,33 @@ export function BentoItem({
   icon,
   href,
   children,
-  colSpan,
-  rowSpan,
+  shape,
+  noCard = false,
 }: BentoItemProps) {
   const external = href ? isExternalHref(href) : false;
 
-  // Generate grid classes from props
-  const gridClasses = getGridSpanClasses(colSpan, rowSpan);
+  // Generate grid classes from shape token
+  const gridClasses = getShapeClasses(shape);
+
+  // Simple wrapper mode for components that provide their own Card
+  if (noCard) {
+    const wrapper = (
+      <div className={cn("w-full h-full", className)}>{children}</div>
+    );
+
+    return (
+      <motion.div layout className={cn("w-full", gridClasses)}>
+        {wrapper}
+      </motion.div>
+    );
+  }
 
   const card = (
     <Card
       className={cn(
-        "group relative h-full overflow-hidden border-border/60 bg-card/60 shadow-sm transition-all",
+        "group relative w-full h-full overflow-hidden border-border/60 bg-card/60 shadow-sm transition-all",
         "hover:-translate-y-0.5 hover:shadow-lg",
         "focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 focus-within:ring-offset-background",
-        gridClasses,
         className
       )}
     >
@@ -107,7 +127,7 @@ export function BentoItem({
   );
 
   const motionCard = (
-    <motion.div layout className="h-full">
+    <motion.div layout className={cn("w-full", gridClasses)}>
       {card}
     </motion.div>
   );
@@ -115,12 +135,12 @@ export function BentoItem({
   if (!href) return motionCard;
 
   return (
-    <motion.div layout className="h-full">
+    <motion.div layout className={cn("w-full", gridClasses)}>
       <a
         href={href}
         target={external ? "_blank" : undefined}
         rel={external ? "noreferrer noopener" : undefined}
-        className="block h-full rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+        className="block w-full h-full rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
       >
         {card}
       </a>
