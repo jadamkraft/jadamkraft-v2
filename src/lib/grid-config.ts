@@ -57,7 +57,6 @@ export const gridItems: GridItem[] = [
     component: "CONTACT",
     shape: "UNIT", // 1x1
     eyebrow: "Contact",
-    title: "Let's build",
   },
   {
     id: "social-github",
