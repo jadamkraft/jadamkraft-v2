@@ -18,7 +18,7 @@ export function HeroCard({ shape, githubStats }: BentoCardProps) {
         <div className="absolute inset-0">
           <Image
             src="/assets/profile-pic.png"
-            alt="J. Adam Kraft - Solutions Engineer and Christian Mystic"
+            alt="J. Adam Kraft - Solutions Engineer and Christian, Father."
             fill
             priority
             className="object-cover scale-x-[-1]"
@@ -33,7 +33,7 @@ export function HeroCard({ shape, githubStats }: BentoCardProps) {
           <div className="space-y-3">
             {/* Micro-copy */}
             <p className="text-sm text-muted-foreground/90 drop-shadow-md">
-              Solutions Engineer. Christian Mystic.
+              Solutions Engineer. Christian, Father.
             </p>
             {/* Tagline */}
             <p className="text-base text-foreground/90 drop-shadow-md md:text-lg">
