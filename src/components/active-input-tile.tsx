@@ -3,6 +3,13 @@
 import * as React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 
 type InputState = "reading" | "listening";
 
@@ -29,6 +36,7 @@ const listeningData: BookData = {
 
 export function ActiveInputTile() {
   const [state, setState] = React.useState<InputState>("reading");
+  const [isLibraryOpen, setIsLibraryOpen] = React.useState(false);
 
   React.useEffect(() => {
     const interval = setInterval(() => {
@@ -41,7 +49,7 @@ export function ActiveInputTile() {
   const currentData = state === "reading" ? readingData : listeningData;
 
   const handleLibraryClick = () => {
-    console.log("Open Library Modal");
+    setIsLibraryOpen(true);
   };
 
   return (
@@ -115,6 +123,20 @@ export function ActiveInputTile() {
           )}
         </div>
       </div>
+
+      {/* Library Dialog */}
+      <Dialog open={isLibraryOpen} onOpenChange={setIsLibraryOpen}>
+        <DialogContent className="p-4 md:p-6">
+          <DialogHeader>
+            <DialogTitle className="text-lg md:text-xl font-semibold">
+              Falling Upward
+            </DialogTitle>
+            <DialogDescription className="text-sm md:text-base text-muted-foreground mt-1">
+              Richard Rohr
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
