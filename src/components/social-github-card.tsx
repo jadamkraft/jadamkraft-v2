@@ -1,24 +1,22 @@
-import { Button } from "@/components/ui/button";
-import { Github } from "lucide-react";
+"use client";
+
+import { Stream } from "@cloudflare/stream-react";
 
 export function SocialGitHubCard() {
+  // Cloudflare Stream video ID
+  const videoId = "492a25079a2da5610df2b9a06dcef3ac";
+
+  // Start time in seconds
+  const startTime = 47;
+
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center">
-      <Button
-        asChild
-        variant="ghost"
-        size="lg"
-        className="h-full w-full flex-col gap-2"
-      >
-        <a
-          href="https://github.com/jadamkraft"
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          <Github className="size-6" />
-          <span className="text-xs font-medium">GitHub</span>
-        </a>
-      </Button>
+    <div className="relative aspect-square w-full overflow-hidden rounded-lg">
+      <Stream
+        src={videoId}
+        startTime={startTime}
+        controls
+        className="h-full w-full"
+      />
     </div>
   );
 }
