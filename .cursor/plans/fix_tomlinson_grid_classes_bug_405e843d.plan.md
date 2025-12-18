@@ -46,5 +46,3 @@ In `bento-grid.tsx` lines 68-74, the TOMLINSON component is wrapped in a `motion
 The outer `motion.div` wrapper will have `className="w-full md:col-span-2 md:row-span-1"` (for BANNER shape), allowing the grid container to properly size the TOMLINSON component as 2 columns wide.
 
 ## Note on Nested Grid Classes
-
-The inner `BentoItem` in `AnimatedTomlinsonCard` will still apply grid classes to its own `motion.div`, but since it's nested inside the outer wrapper, those classes won't affect the main grid layout. They're harmless and can remain for consistency.

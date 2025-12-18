@@ -4,7 +4,11 @@ import * as React from "react";
 import { motion } from "framer-motion";
 
 import { cn } from "@/lib/utils";
-import { BentoItem, getShapeClasses } from "@/components/bento-item";
+import {
+  BentoItem,
+  getShapeClasses,
+  BentoShape,
+} from "@/components/bento-item";
 import { gridItems } from "@/lib/grid-config";
 import { GitHubStats } from "@/lib/github";
 
@@ -16,6 +20,11 @@ import { StatsCard } from "@/components/stats-card";
 import { ContactCard } from "@/components/contact-card";
 import { SocialGitHubCard } from "@/components/social-github-card";
 import { SocialMailCard } from "@/components/social-mail-card";
+
+export interface BentoCardProps {
+  shape?: BentoShape;
+  githubStats?: GitHubStats;
+}
 
 interface BentoGridProps {
   githubStats: GitHubStats;
@@ -36,10 +45,7 @@ const shapeClassMap = {
 /**
  * Component registry mapping component keys to their React components.
  */
-const componentRegistry: Record<
-  string,
-  React.ComponentType<any> | React.ComponentType<{ githubStats: GitHubStats }>
-> = {
+const componentRegistry: Record<string, React.ComponentType<BentoCardProps>> = {
   HERO: HeroCard,
   TOMLINSON: AnimatedTomlinsonCard,
   POEM: PoemCard,
@@ -65,24 +71,12 @@ export function BentoGrid({ githubStats, className }: BentoGridProps) {
           return null;
         }
 
-        // TOMLINSON already wraps itself in BentoItem, so render it directly with shape prop
-        if (item.component === "TOMLINSON") {
-          const shapeClasses = getShapeClasses(item.shape);
-          return (
-            <motion.div
-              key={item.id}
-              layout
-              className={cn("w-full", shapeClasses)}
-            >
-              <AnimatedTomlinsonCard shape={item.shape} />
-            </motion.div>
-          );
-        }
-
         // For components that need BentoItem wrapper
         const content =
           item.component === "STATS" ? (
             <Component githubStats={githubStats} />
+          ) : item.component === "TOMLINSON" ? (
+            <Component shape={item.shape} />
           ) : (
             <Component />
           );
