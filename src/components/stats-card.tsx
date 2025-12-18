@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Github } from "lucide-react";
-import { GitHubStats } from "@/lib/github";
+import { BentoCardProps } from "@/components/bento-grid";
 
 function formatDate(dateString: string): string {
   const date = new Date(dateString);
@@ -11,11 +11,15 @@ function formatDate(dateString: string): string {
   }).format(date);
 }
 
-interface StatsCardProps {
-  githubStats: GitHubStats;
-}
+export function StatsCard({ githubStats }: BentoCardProps) {
+  if (!githubStats) {
+    return (
+      <div className="flex h-full w-full flex-col justify-between gap-3">
+        <div className="text-xs text-muted-foreground">Loading...</div>
+      </div>
+    );
+  }
 
-export function StatsCard({ githubStats }: StatsCardProps) {
   return (
     <div className="flex h-full w-full flex-col justify-between gap-3">
       <div className="space-y-2">
