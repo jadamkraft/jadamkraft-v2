@@ -103,6 +103,7 @@ export function BentoGrid({ githubStats, className }: BentoGridProps) {
             shape={item.shape}
             eyebrow={item.eyebrow}
             title={title}
+            noCard={item.component === "HERO" || item.component === "TOMLINSON"}
           >
             {content}
           </BentoItem>

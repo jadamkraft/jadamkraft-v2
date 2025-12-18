@@ -1,39 +1,51 @@
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
+"use client";
 
-export function HeroCard() {
+import * as React from "react";
+import Image from "next/image";
+import { motion } from "framer-motion";
+import { Card } from "@/components/ui/card";
+import { BentoCardProps } from "@/components/bento-grid";
+
+export function HeroCard({ shape, githubStats }: BentoCardProps) {
   return (
-    <div className="flex h-full w-full flex-col justify-between gap-6">
-      <div className="flex items-start justify-between gap-6">
-        <div className="space-y-3">
-          <Badge variant="outline" className="border-border/60">
-            Solutions Engineer
-          </Badge>
-          <div className="space-y-1">
-            <p className="text-sm text-muted-foreground">J Adam Kraft</p>
-            <h2 className="text-3xl font-semibold leading-tight tracking-tight md:text-4xl">
-              Building fast systems with a human pulse.
-            </h2>
-          </div>
+    <motion.div
+      className="h-full w-full"
+      whileHover={{ y: -5 }}
+      transition={{ duration: 0.2, ease: "easeOut" }}
+    >
+      <Card className="relative h-full w-full overflow-hidden border-border/60 bg-card/60 shadow-sm">
+        {/* Background Image Container */}
+        <div className="absolute inset-0">
+          <Image
+            src="/assets/profile-pic.png"
+            alt="J. Adam Kraft - Solutions Engineer and Christian Mystic"
+            fill
+            priority
+            className="object-cover scale-x-[-1]"
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-black/20" />
         </div>
 
-        <div className="relative hidden size-28 shrink-0 overflow-hidden rounded-2xl border border-border/60 bg-muted md:block">
-          <div className="absolute inset-0 bg-[radial-gradient(700px_circle_at_30%_20%,hsl(var(--foreground)/0.10),transparent_55%)]" />
-          <div className="absolute inset-0 grid place-items-center text-xs text-muted-foreground">
-            Photo
+        {/* Content Overlay */}
+        <div className="relative z-10 flex h-full flex-col justify-end p-6 md:p-8">
+          <div className="space-y-3">
+            {/* Micro-copy */}
+            <p className="text-sm text-muted-foreground/90 drop-shadow-md">
+              Solutions Engineer. Christian Mystic.
+            </p>
+            {/* Tagline */}
+            <p className="text-base text-foreground/90 drop-shadow-md md:text-lg">
+              Digital craftsmanship. Ancient roots.
+            </p>
+            {/* Headline */}
+            <h1 className="text-3xl font-semibold leading-tight tracking-tight text-white drop-shadow-lg md:text-4xl lg:text-5xl">
+              J. Adam Kraft
+            </h1>
           </div>
         </div>
-      </div>
-
-      <div className="space-y-3">
-        <Separator className="bg-border/60" />
-        <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-          <span className="font-mono">Next.js</span>
-          <span className="font-mono">TypeScript</span>
-          <span className="font-mono">Tailwind</span>
-          <span className="font-mono">shadcn/ui</span>
-        </div>
-      </div>
-    </div>
+      </Card>
+    </motion.div>
   );
 }
