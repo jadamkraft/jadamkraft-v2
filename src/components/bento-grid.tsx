@@ -74,7 +74,7 @@ export function BentoGrid({ githubStats, className }: BentoGridProps) {
               layout
               className={cn("w-full", shapeClasses)}
             >
-              <Component shape={item.shape} />
+              <AnimatedTomlinsonCard shape={item.shape} />
             </motion.div>
           );
         }
