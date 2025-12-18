@@ -10,7 +10,7 @@ export type BentoComponentKey =
   | "STATS"
   | "CONTACT"
   | "SOCIAL_GITHUB"
-  | "SOCIAL_MAIL";
+  | "ACTIVE_INPUT";
 
 /**
  * Configuration for a single grid item.
@@ -65,8 +65,8 @@ export const gridItems: GridItem[] = [
     shape: "UNIT", // 1x1
   },
   {
-    id: "social-mail",
-    component: "SOCIAL_MAIL",
+    id: "active-input",
+    component: "ACTIVE_INPUT",
     shape: "UNIT", // 1x1
   },
 ];

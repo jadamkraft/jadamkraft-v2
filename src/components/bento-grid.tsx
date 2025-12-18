@@ -19,7 +19,7 @@ import { PoemCard } from "@/components/poem-card";
 import { StatsCard } from "@/components/stats-card";
 import { ContactCard } from "@/components/contact-card";
 import { SocialGitHubCard } from "@/components/social-github-card";
-import { SocialMailCard } from "@/components/social-mail-card";
+import { ActiveInputTile } from "@/components/active-input-tile";
 
 export interface BentoCardProps {
   shape?: BentoShape;
@@ -52,7 +52,7 @@ const componentRegistry: Record<string, React.ComponentType<BentoCardProps>> = {
   STATS: StatsCard,
   CONTACT: ContactCard,
   SOCIAL_GITHUB: SocialGitHubCard,
-  SOCIAL_MAIL: SocialMailCard,
+  ACTIVE_INPUT: ActiveInputTile,
 };
 
 export function BentoGrid({ githubStats, className }: BentoGridProps) {
