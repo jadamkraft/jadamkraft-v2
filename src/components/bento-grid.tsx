@@ -11,6 +11,7 @@ import {
 } from "@/components/bento-item";
 import { gridItems } from "@/lib/grid-config";
 import { GitHubStats } from "@/lib/github";
+import { FilterType } from "@/components/filter-buttons";
 
 // Component imports
 import { HeroCard } from "@/components/hero-card";
@@ -28,6 +29,7 @@ export interface BentoCardProps {
 
 interface BentoGridProps {
   githubStats: GitHubStats;
+  activeFilter?: FilterType;
   className?: string;
 }
 
@@ -55,7 +57,28 @@ const componentRegistry: Record<string, React.ComponentType<BentoCardProps>> = {
   ACTIVE_INPUT: ActiveInputTile,
 };
 
-export function BentoGrid({ githubStats, className }: BentoGridProps) {
+export function BentoGrid({
+  githubStats,
+  activeFilter = "all",
+  className,
+}: BentoGridProps) {
+  // Filter grid items based on active filter
+  const filteredItems = React.useMemo(() => {
+    if (activeFilter === "all") {
+      return gridItems;
+    }
+
+    return gridItems.filter((item) => {
+      if (activeFilter === "work") {
+        return item.category === "work" || item.category === "both";
+      }
+      if (activeFilter === "reflect") {
+        return item.category === "reflect" || item.category === "both";
+      }
+      return true;
+    });
+  }, [activeFilter]);
+
   return (
     <div
       className={cn(
@@ -63,7 +86,7 @@ export function BentoGrid({ githubStats, className }: BentoGridProps) {
         className
       )}
     >
-      {gridItems.map((item) => {
+      {filteredItems.map((item) => {
         const Component = componentRegistry[item.component];
 
         if (!Component) {
