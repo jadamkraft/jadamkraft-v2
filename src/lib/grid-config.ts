@@ -45,19 +45,19 @@ export const gridItems: GridItem[] = [
     category: "both",
   },
   {
-    id: "tomlinson",
-    component: "TOMLINSON",
-    shape: "BANNER", // 2x1
-    category: "both",
-  },
-  {
     id: "digital-hearth",
     component: "DIGITAL_HEARTH",
     shape: "BANNER", // 2x1
     category: "work",
-    eyebrow: "Project",
+    eyebrow: "LIVE OPS",
     title: "The Digital Hearth",
     href: "https://www.digitalhearth.care",
+  },
+  {
+    id: "tomlinson",
+    component: "TOMLINSON",
+    shape: "BANNER", // 2x1
+    category: "both",
   },
   {
     id: "poem",
@@ -99,8 +99,8 @@ export const gridItems: GridItem[] = [
     component: "LOCATION",
     shape: "UNIT", // 1x1
     category: "both",
-    eyebrow: "Location",
-    title: "Tulsa, OK",
+    eyebrow: "Field Ops",
+    title: "Location",
   },
   {
     id: "social-media",

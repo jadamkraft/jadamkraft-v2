@@ -28,6 +28,7 @@ import { SocialMediaTile } from "@/components/social-media-tile";
 export interface BentoCardProps {
   shape?: BentoShape;
   githubStats?: GitHubStats;
+  eyebrow?: string;
 }
 
 interface BentoGridProps {
@@ -106,6 +107,8 @@ export function BentoGrid({
             <Component githubStats={githubStats} />
           ) : item.component === "TOMLINSON" ? (
             <Component shape={item.shape} />
+          ) : item.component === "DIGITAL_HEARTH" ? (
+            <Component eyebrow={item.eyebrow} />
           ) : (
             <Component />
           );
@@ -133,7 +136,11 @@ export function BentoGrid({
             eyebrow={item.eyebrow}
             title={title}
             href={item.href}
-            noCard={item.component === "HERO" || item.component === "TOMLINSON"}
+            noCard={
+              item.component === "HERO" ||
+              item.component === "TOMLINSON" ||
+              item.component === "DIGITAL_HEARTH"
+            }
           >
             {content}
           </BentoItem>
