@@ -21,6 +21,9 @@ import { StatsCard } from "@/components/stats-card";
 import { ContactCard } from "@/components/contact-card";
 import { SocialGitHubCard } from "@/components/social-github-card";
 import { ActiveInputTile } from "@/components/active-input-tile";
+import { DigitalHearthCard } from "@/components/digital-hearth-card";
+import { LocationTile } from "@/components/location-tile";
+import { SocialMediaTile } from "@/components/social-media-tile";
 
 export interface BentoCardProps {
   shape?: BentoShape;
@@ -55,6 +58,9 @@ const componentRegistry: Record<string, React.ComponentType<BentoCardProps>> = {
   CONTACT: ContactCard,
   SOCIAL_GITHUB: SocialGitHubCard,
   ACTIVE_INPUT: ActiveInputTile,
+  DIGITAL_HEARTH: DigitalHearthCard,
+  LOCATION: LocationTile,
+  SOCIAL_MEDIA: SocialMediaTile,
 };
 
 export function BentoGrid({
@@ -126,6 +132,7 @@ export function BentoGrid({
             shape={item.shape}
             eyebrow={item.eyebrow}
             title={title}
+            href={item.href}
             noCard={item.component === "HERO" || item.component === "TOMLINSON"}
           >
             {content}

@@ -10,7 +10,10 @@ export type BentoComponentKey =
   | "STATS"
   | "CONTACT"
   | "SOCIAL_GITHUB"
-  | "ACTIVE_INPUT";
+  | "ACTIVE_INPUT"
+  | "DIGITAL_HEARTH"
+  | "LOCATION"
+  | "SOCIAL_MEDIA";
 
 /**
  * Category for filtering grid items.
@@ -27,6 +30,7 @@ export interface GridItem {
   category: GridItemCategory;
   eyebrow?: string;
   title?: string;
+  href?: string;
 }
 
 /**
@@ -45,6 +49,15 @@ export const gridItems: GridItem[] = [
     component: "TOMLINSON",
     shape: "BANNER", // 2x1
     category: "both",
+  },
+  {
+    id: "digital-hearth",
+    component: "DIGITAL_HEARTH",
+    shape: "BANNER", // 2x1
+    category: "work",
+    eyebrow: "Project",
+    title: "The Digital Hearth",
+    href: "https://www.digitalhearth.care",
   },
   {
     id: "poem",
@@ -80,5 +93,21 @@ export const gridItems: GridItem[] = [
     component: "ACTIVE_INPUT",
     shape: "UNIT", // 1x1
     category: "reflect",
+  },
+  {
+    id: "location",
+    component: "LOCATION",
+    shape: "UNIT", // 1x1
+    category: "both",
+    eyebrow: "Location",
+    title: "Tulsa, OK",
+  },
+  {
+    id: "social-media",
+    component: "SOCIAL_MEDIA",
+    shape: "UNIT", // 1x1
+    category: "both",
+    eyebrow: "Social",
+    title: "Connect",
   },
 ];
